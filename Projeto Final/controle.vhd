@@ -66,7 +66,7 @@ begin
 c_i <= '1' when (estadoatual = S2 or estadoatual = S5) else '0';
 c_linha <= '1' when (estadoatual = S0 or estadoatual = S7) else '0';
 c_coluna <= '1' when (estadoatual = S1 or estadoatual = S0 or estadoatual = S6) else '0';
-c_soma <= '1' when (estadoatual = S0 or estadoatual = S4 or estadoatual = S5) else '0';
+c_soma <= '1' when (estadoatual = S0 or estadoatual = S4) else '0';
 cDesCol <= '1' when (estadoatual = S0 or estadoatual = S2 or estadoatual = S5 or estadoatual = S8) else '0';
 cDesLinha <= '1' when (estadoatual = S0 or estadoatual = S2 or estadoatual = S8) else '0';
 c_end_mem <= '1' when estadoatual = S2A else '0';
