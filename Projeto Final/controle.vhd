@@ -4,12 +4,12 @@ use ieee.std_logic_1164.all;
 entity controle is
     port(
         clk, rst, iniciar, proxLinha, fim_linha, fim_coluna, fim_i: in std_logic;
-        pronto, write_mem_saida, read_kernel, read_mem, c_i, c_linha, c_coluna, c_soma, cDesCol, cDesLinha, c_end_mem, SelDesCol, SelDeslinha, sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma: out std_logic
+        pronto, write_mem_saida, read_kernel, read_mem, c_i, c_linha, c_coluna, c_soma, cDesCol, cDesLinha, c_end_mem, c_end_mem_saida, SelDesCol, SelDeslinha, sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma: out std_logic
     );
 end controle;
 
 architecture arch of controle is
-    type tipo_estado is(S0, S1, S2, S2A, S3, S4 ,S5, S6, S7, S8);
+    type tipo_estado is(S0, S1, S2, S2A, S3, S4 ,S5, S5A, S6, S7, S8);
     signal estadoatual: tipo_estado;
 
 begin
@@ -37,7 +37,7 @@ begin
                     estadoatual <= S5;
                 when S5 =>
                     if fim_i = '1' then
-                        estadoatual <= S6;
+                        estadoatual <= S5A;
                     else
                         if fim_i = '0' and proxLinha = '0' then
                             estadoatual <= S2A;
@@ -45,6 +45,8 @@ begin
                             estadoatual <= S8;
                         end if;
                     end if;
+                when S5A =>
+                    estadoatual <= S6;
                 when S6 =>
                     if fim_coluna = '1' then
                         estadoatual <= S7;
@@ -70,6 +72,7 @@ c_soma <= '1' when (estadoatual = S0 or estadoatual = S4) else '0';
 cDesCol <= '1' when (estadoatual = S0 or estadoatual = S2 or estadoatual = S5 or estadoatual = S8) else '0';
 cDesLinha <= '1' when (estadoatual = S0 or estadoatual = S2 or estadoatual = S8) else '0';
 c_end_mem <= '1' when estadoatual = S2A else '0';
+c_end_mem_saida <= '1' when estadoatual = S5A else '0';
 SelDesCol <= '1' when estadoatual = S5 else '0';
 SelDesLinha <= '1' when estadoatual = S8 else '0';
 sel_mux_coluna <= '1' when (estadoatual = S0 or estadoatual = S1) else '0';
