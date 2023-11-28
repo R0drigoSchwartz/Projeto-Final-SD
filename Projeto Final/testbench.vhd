@@ -16,7 +16,7 @@ signal clk, finished: std_logic := '0';
 signal end_kernel: std_logic_vector(3 downto 0);
 signal data_mem_saida, data_mem_goldenmodel: std_logic_vector(7 downto 0);
 signal data_kernel, data_mem, data_out: std_logic_vector(7 downto 0);
-signal end_mem, end_mem_saida, end_goldenmodel:  std_logic_vector(18 downto 0);
+signal end_mem, end_mem_saida, end_goldenmodel, end_mem_saida_comp:  std_logic_vector(18 downto 0);
 
 -- Components
 
@@ -53,17 +53,18 @@ signal end_mem, end_mem_saida, end_goldenmodel:  std_logic_vector(18 downto 0);
     end component;
 
     component topo is 
-        port (
-            -- Entradas:
-            clk, rst, iniciar : in std_logic;
-            data_kernel, data_mem: in std_logic_vector(8 downto 0);
-    
-            -- Saidas:
-            pronto, read_kernel, read_mem, write_mem_saida: out std_logic;
-            end_kernel: out std_logic_vector(3 downto 0);
-            end_mem, end_mem_saida: out std_logic_vector(18 downto 0);
-            data_mem_saida: out std_logic_vector(7 downto 0)
-        );
+    port (
+      -- Entradas:
+      clk, rst, iniciar : in std_logic;
+      data_kernel, data_mem: in std_logic_vector(7 downto 0);
+
+      -- Saidas:
+      pronto, read_kernel, read_mem, write_mem_saida: out std_logic;
+      end_kernel: out std_logic_vector(3 downto 0);
+      end_mem, end_mem_saida: out std_logic_vector(18 downto 0);
+      data_mem_saida: out std_logic_vector(7 downto 0)
+  );
+
     end component;
     
 
@@ -101,7 +102,7 @@ begin
    wait for period;
 	for i in 0 to 359999 loop
 	  end_goldenmodel <= std_logic_vector(to_unsigned(i, 19));
-	  end_mem_saida <= std_logic_vector(to_unsigned(i, 19));
+	  end_mem_saida_comp <= std_logic_vector(to_unsigned(i, 19));
 	  assert(data_out = data_mem_goldenmodel);
 		report
 			"Falha na simulacao."

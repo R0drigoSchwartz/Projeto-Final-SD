@@ -72,7 +72,7 @@ c_soma <= '1' when (estadoatual = S0 or estadoatual = S4 or estadoatual = S6) el
 cDesCol <= '1' when (estadoatual = S0 or estadoatual = S2 or estadoatual = S5 or estadoatual = S8) else '0';
 cDesLinha <= '1' when (estadoatual = S0 or estadoatual = S2 or estadoatual = S8) else '0';
 c_end_mem <= '1' when estadoatual = S2A else '0';
-c_end_mem_saida <= '1' when estadoatual = S5A else '0';
+c_end_mem_saida <= '1' when (estadoatual = S5A or estadoatual = S0) else '0';
 SelDesCol <= '1' when estadoatual = S5 else '0';
 SelDesLinha <= '1' when estadoatual = S8 else '0';
 sel_mux_coluna <= '1' when (estadoatual = S0 or estadoatual = S1) else '0';
