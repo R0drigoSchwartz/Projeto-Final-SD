@@ -40,7 +40,7 @@ ARCHITECTURE arc OF datapath IS
 	signal ent_1_somador_leitura_3, ent_2_somador_leitura_3 : std_logic_vector(19 downto 0);
 	signal end_mem_saida_intermediario, s_somador_leitura_3 : std_logic_vector(20 downto 0);
 	signal linha, coluna : std_LOGIC_VECTOR(9 downto 0);
-	signal end_mem_in, saida_reg_end_mem : std_logic_vector(18 downto 0);
+	signal end_mem_in : std_logic_vector(18 downto 0);
 	
 
 
@@ -231,11 +231,6 @@ BEGIN
 
 	registrador_end_mem_saida: registrador
 	GENERIC MAP(N => 19)
-	PORT MAP(clk, c_end_mem_saida, end_mem_saida_intermediario(18 downto 0), saida_reg_end_mem);
+	PORT MAP(clk, c_end_mem_saida, end_mem_saida_intermediario(18 downto 0), end_mem_saida);
 
-	end_mem_saida <= saida_reg_end_mem;
-	
-	
-
-	
 END arc;
