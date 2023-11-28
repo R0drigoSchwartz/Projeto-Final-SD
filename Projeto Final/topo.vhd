@@ -21,7 +21,7 @@ end entity;
 architecture arc of topo is
 
     -- Signals:
-    signal c_i, c_linha, c_coluna, c_soma, cDesCol, cDesLinha, c_end_mem, c_end_mem_saida, selDesCol, selDesLinha, sel_mux_coluna, sel_mux_linha, sel_mux_i, proxLinha, fim_coluna, fim_linha, fim_i, sel_mux_soma: std_logic;
+    signal c_i, c_linha, c_coluna, c_soma, cDesCol, cDesLinha, c_end_mem, c_end_mem_saida, selDesCol, selDesLinha, sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_mem_saida, proxLinha, fim_coluna, fim_linha, fim_i, sel_mux_soma: std_logic;
 
     -- Componentes:
 
@@ -31,7 +31,7 @@ architecture arc of topo is
             clk, rst, iniciar, proxLinha, fim_linha, fim_coluna, fim_i: in std_logic;
 
             -- Saidas
-            pronto, write_mem_saida, read_kernel, read_mem, c_i, c_linha, c_coluna, c_soma, cDesCol, cDesLinha, c_end_mem, c_end_mem_saida, SelDesCol, SelDeslinha, sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma: out std_logic
+            pronto, write_mem_saida, read_kernel, read_mem, c_i, c_linha, c_coluna, c_soma, cDesCol, cDesLinha, c_end_mem, c_end_mem_saida, SelDesCol, SelDeslinha, sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma, sel_mux_mem_saida: out std_logic
         );
     end component;
 
@@ -46,7 +46,7 @@ architecture arc of topo is
 		----ENTRADAS DE CONTROLE
 		c_i, c_linha, c_coluna, c_soma, c_end_mem, c_end_mem_saida : IN STD_LOGIC;
 		cDesCol, CDesLinha, SelDesCol, SelDesLinha : IN STD_LOGIC;
-		sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma: IN STD_LOGIC;
+		sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma, sel_mux_mem_saida: IN STD_LOGIC;
 
 		----SAÍDAS DE DADOS
 		end_kernel : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -61,13 +61,13 @@ architecture arc of topo is
     end component;
 
 begin 
-    control_e : controle port map(clk, rst, iniciar, proxLinha, fim_linha, fim_coluna, fim_i, pronto, write_mem_saida, read_kernel, read_mem, c_i, c_linha, c_coluna, c_soma, cDesCol, cDesLinha, c_end_mem, c_end_mem_saida, SelDesCol, SelDeslinha, sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma);
+    control_e : controle port map(clk, rst, iniciar, proxLinha, fim_linha, fim_coluna, fim_i, pronto, write_mem_saida, read_kernel, read_mem, c_i, c_linha, c_coluna, c_soma, cDesCol, cDesLinha, c_end_mem, c_end_mem_saida, SelDesCol, SelDeslinha, sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma, sel_mux_mem_saida);
 	operativo : datapath port map(
         clk, data_kernel, data_mem, 
         c_i, c_linha, c_coluna, c_soma,
         c_end_mem, c_end_mem_saida,
         cDesCol, CDesLinha, SelDesCol, SelDesLinha,
-        sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma,
+        sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma, sel_mux_mem_saida,
         end_kernel,end_mem,
         end_mem_saida, data_mem_saida,
         proxLinha, fim_linha, fim_coluna, fim_i);

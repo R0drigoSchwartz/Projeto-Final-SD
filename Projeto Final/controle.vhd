@@ -4,7 +4,7 @@ use ieee.std_logic_1164.all;
 entity controle is
     port(
         clk, rst, iniciar, proxLinha, fim_linha, fim_coluna, fim_i: in std_logic;
-        pronto, write_mem_saida, read_kernel, read_mem, c_i, c_linha, c_coluna, c_soma, cDesCol, cDesLinha, c_end_mem, c_end_mem_saida, SelDesCol, SelDeslinha, sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma: out std_logic
+        pronto, write_mem_saida, read_kernel, read_mem, c_i, c_linha, c_coluna, c_soma, cDesCol, cDesLinha, c_end_mem, c_end_mem_saida, SelDesCol, SelDeslinha, sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma, sel_mux_mem_saida: out std_logic
     );
 end controle;
 
@@ -79,6 +79,7 @@ sel_mux_coluna <= '1' when (estadoatual = S0 or estadoatual = S1) else '0';
 sel_mux_linha <= '1' when estadoatual = S0 else '0';
 sel_mux_i <= '1' when estadoatual = S2 else '0';
 sel_mux_soma <= '1' when (estadoatual = S0 or estadoatual = S6) else '0';
+sel_mux_mem_saida <= '1' when estadoatual = S0 else '0';
 write_mem_saida <= '1' when estadoatual = S6 else '0';
 read_kernel <= '1' when estadoatual = S3 else '0';
 read_mem <= '1' when estadoatual = S3 else '0';

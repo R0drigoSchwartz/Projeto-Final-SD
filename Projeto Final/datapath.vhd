@@ -11,7 +11,7 @@ ENTITY datapath IS
 		----ENTRADAS DE CONTROLE
 		c_i, c_linha, c_coluna, c_soma, c_end_mem, c_end_mem_saida : IN STD_LOGIC;
 		cDesCol, CDesLinha, SelDesCol, SelDesLinha : IN STD_LOGIC;
-		sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma : IN STD_LOGIC;
+		sel_mux_coluna, sel_mux_linha, sel_mux_i, sel_mux_soma, sel_mux_mem_saida: IN STD_LOGIC;
 
 		----SAÃDAS DE DADOS
 		end_kernel : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -40,7 +40,7 @@ ARCHITECTURE arc OF datapath IS
 	signal ent_1_somador_leitura_3, ent_2_somador_leitura_3 : std_logic_vector(19 downto 0);
 	signal end_mem_saida_intermediario, s_somador_leitura_3 : std_logic_vector(20 downto 0);
 	signal linha, coluna : std_LOGIC_VECTOR(9 downto 0);
-	signal end_mem_in : std_logic_vector(18 downto 0);
+	signal end_mem_in, s_mux_mem_saida : std_logic_vector(18 downto 0);
 	
 
 
@@ -229,8 +229,12 @@ BEGIN
 	generic map(N=>20)
 	port map(s_multiplicador_2, ent_somador_4, end_mem_saida_intermediario);
 
+	mux_mem_saida : MUX2X1
+	GENERIC MAP(N => 19)
+	PORT MAP(sel_mux_mem_saida, end_mem_saida_intermediario(18 downto 0), "0000000000000000000", s_mux_mem_saida);
+
 	registrador_end_mem_saida: registrador
 	GENERIC MAP(N => 19)
-	PORT MAP(clk, c_end_mem_saida, end_mem_saida_intermediario(18 downto 0), end_mem_saida);
+	PORT MAP(clk, c_end_mem_saida, s_mux_mem_saida, end_mem_saida);
 
 END arc;
